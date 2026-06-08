@@ -30,3 +30,23 @@ Spotify の曲で遊ぶしりとりゲームです。
 ```text
 prefix: hoge
 ```
+
+### prefix の種類
+
+| prefix | 用途 |
+| --- | --- |
+| `feat` | 機能追加 |
+| `fix` | バグ修正 |
+| `docs` | ドキュメントの追加・修正 |
+| `style` | フォーマットや見た目のみの変更 |
+| `refactor` | 振る舞いを変えないコード整理 |
+| `test` | テストの追加・修正 |
+| `chore` | 設定，依存関係，ビルド周りなど |
+
+例:
+
+```text
+feat: Spotify検索APIを追加
+fix: 読み仮名の正規化を修正
+docs: READMEにコミット規約を追加
+```
