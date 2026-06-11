@@ -19,9 +19,15 @@ Spotify の曲で遊ぶしりとりゲームです。
 
 ## 技術方針
 
-- フロントエンドとAPIは Next.js + TypeScript を想定
-- 曲検索には Spotify Web API を使う
-- 最初はログインなしで遊べるMVPを目指す
+| 用途 | 技術 |
+| --- | --- |
+| フロント | Nuxt 4 + TypeScript |
+| UI | Tailwind CSS |
+| 状態管理 | Pinia |
+| Spotify API | Nuxt Server API |
+| 保存 | 最初は localStorage |
+
+最初はログインなしで遊べるMVPを目指す。
 
 ## コミット規約
 
