@@ -1,69 +1,97 @@
 export type ReadingValidationResult = {
-  ok: boolean
-  reason?: string
-}
+	ok: boolean;
+	reason?: string;
+};
+
+const map: Record<string, string> = {
+	ぁ: 'あ',
+	ぃ: 'い',
+	ぅ: 'う',
+	ぇ: 'え',
+	ぉ: 'お',
+	っ: 'つ',
+	ゃ: 'や',
+	ゅ: 'ゆ',
+	ょ: 'よ',
+	ゎ: 'わ',
+	ゕ: 'か',
+	ゖ: 'け',
+};
+
+const getVowel = (char: string): string => {
+	if ('あかさたなはまやらわがざだばぱぁゃ'.includes(char)) return 'あ';
+	if ('いきしちにひみりぎじぢびぴぃ'.includes(char)) return 'い';
+	if ('うくすつぬふむゆるぐずづぶぷぅゅ'.includes(char)) return 'う';
+	if ('えけせてねへめれげぜでべぺぇ'.includes(char)) return 'え';
+	if ('おこそとのほもよろをごぞどぼぽぉょ'.includes(char)) return 'お';
+	return char;
+};
 
 export const normalizeReading = (reading: string): string => {
-  // TODO: カタカナをひらがなに変換する
-  // TODO: 小文字かなを通常のかなに正規化する
-  // TODO: 長音「ー」を処理する
-  // TODO: 記号，空白，英数字を除外する
-  return reading
-}
+	// カタカナをひらがなに変換する
+	reading = reading.replace(/[ァ-ヶ]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
+	// 小文字かなを通常のかなに正規化する
+	reading = reading.replace(/[ぁぃぅぇぉっゃゅょゎゕゖ]/g, (char) => map[char]);
+	// 長音「ー」を前の文字の母音に変換する
+	reading = reading.replace(/ー/g, (_, offset) =>
+		getVowel(offset > 0 ? reading[offset - 1] : ''),
+	);
+	// 記号，空白，英数字を除外する
+	reading = reading.replace(/[^ぁ-ん]/g, '');
+
+	return reading;
+};
 
 export const getFirstReadingChar = (reading: string): string => {
-  // TODO: 正規化した読みの最初の文字を返す
-  return normalizeReading(reading).at(0) ?? ''
-}
+	// TODO: 正規化した読みの最初の文字を返す
+	return normalizeReading(reading).at(0) ?? '';
+};
 
 export const getLastReadingChar = (reading: string): string => {
-  // TODO: 正規化した読みの最後の文字を返す
-  return normalizeReading(reading).at(-1) ?? ''
-}
+	// TODO: 正規化した読みの最後の文字を返す
+	return normalizeReading(reading).at(-1) ?? '';
+};
 
 export const endsWithN = (reading: string): boolean => {
-  // TODO: 読みが「ん」で終わるか判定する
-  return getLastReadingChar(reading) === 'ん'
-}
+	// TODO: 読みが「ん」で終わるか判定する
+	return getLastReadingChar(reading) === 'ん';
+};
 
-export const canConnectReadings = (
-  previousReading: string,
-  nextReading: string,
-): boolean => {
-  // TODO: 前の読みの最後の文字と，次の読みの最初の文字が一致するか判定する
-  const previousLast = getLastReadingChar(previousReading)
-  const nextFirst = getFirstReadingChar(nextReading)
+export const canConnectReadings = (previousReading: string, nextReading: string): boolean => {
+	// TODO: 前の読みの最後の文字と，次の読みの最初の文字が一致するか判定する
+	const previousLast = getLastReadingChar(previousReading);
+	const nextFirst = getFirstReadingChar(nextReading);
 
-  return previousLast !== '' && previousLast === nextFirst
-}
+	return previousLast !== '' && previousLast === nextFirst;
+};
 
 export const validateNextReading = (
-  previousReading: string,
-  nextReading: string,
+	previousReading: string,
+	nextReading: string,
 ): ReadingValidationResult => {
-  // TODO: 空文字，「ん」終わり，しりとり不一致を判定する
-  if (normalizeReading(nextReading) === '') {
-    return {
-      ok: false,
-      reason: '読み仮名を入力してください',
-    }
-  }
+	// TODO: 空文字，「ん」終わり，しりとり不一致を判定する
+	if (normalizeReading(nextReading) === '') {
+		return {
+			ok: false,
+			reason: '読み仮名を入力してください',
+		};
+	}
 
-  if (endsWithN(nextReading)) {
-    return {
-      ok: false,
-      reason: '「ん」で終わる曲は使えません',
-    }
-  }
+	if (endsWithN(nextReading)) {
+		return {
+			ok: false,
+			reason: '「ん」で終わる曲は使えません',
+		};
+	}
 
-  if (!canConnectReadings(previousReading, nextReading)) {
-    return {
-      ok: false,
-      reason: '前の曲の最後の文字と，次の曲の最初の文字が一致していません',
-    }
-  }
+	if (!canConnectReadings(previousReading, nextReading)) {
+		return {
+			ok: false,
+			reason: '前の曲の最後の文字と，次の曲の最初の文字が一致していません',
+		};
+	}
 
-  return {
-    ok: true,
-  }
-}
+	return {
+		ok: true,
+	};
+};
