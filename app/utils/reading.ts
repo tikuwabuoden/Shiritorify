@@ -53,9 +53,8 @@ export const getLastReadingChar = (reading: string): string => {
 };
 
 export const endsWithN = (reading: string): boolean => {
-	// TODO: 読みが「ん」で終わるか判定する
-	void reading;
-	return false;
+	//  読みが「ん」で終わるか判定する
+	return getLastReadingChar(reading) === 'ん';
 };
 
 export const canConnectReadings = (previousReading: string, nextReading: string): boolean => {
