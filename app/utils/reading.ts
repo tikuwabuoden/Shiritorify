@@ -58,10 +58,8 @@ export const endsWithN = (reading: string): boolean => {
 };
 
 export const canConnectReadings = (previousReading: string, nextReading: string): boolean => {
-	// TODO: 前の読みの最後の文字と，次の読みの最初の文字が一致するか判定する
-	void previousReading;
-	void nextReading;
-	return false;
+	// 前の読みの最後の文字と，次の読みの最初の文字が一致するか判定する
+	return getLastReadingChar(previousReading) === getFirstReadingChar(nextReading);
 };
 
 export const validateNextReading = (
