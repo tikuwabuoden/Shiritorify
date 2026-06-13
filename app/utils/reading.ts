@@ -43,9 +43,8 @@ export const normalizeReading = (reading: string): string => {
 };
 
 export const getFirstReadingChar = (reading: string): string => {
-	// TODO: 正規化した読みの最初の文字を返す
-	void reading;
-	return '';
+	// 正規化した読みの最初の文字を返す
+	return normalizeReading(reading).at(0) ?? '';
 };
 
 export const getLastReadingChar = (reading: string): string => {
