@@ -44,25 +44,27 @@ export const normalizeReading = (reading: string): string => {
 
 export const getFirstReadingChar = (reading: string): string => {
 	// TODO: 正規化した読みの最初の文字を返す
-	return normalizeReading(reading).at(0) ?? '';
+	void reading;
+	return '';
 };
 
 export const getLastReadingChar = (reading: string): string => {
 	// TODO: 正規化した読みの最後の文字を返す
-	return normalizeReading(reading).at(-1) ?? '';
+	void reading;
+	return '';
 };
 
 export const endsWithN = (reading: string): boolean => {
 	// TODO: 読みが「ん」で終わるか判定する
-	return getLastReadingChar(reading) === 'ん';
+	void reading;
+	return false;
 };
 
 export const canConnectReadings = (previousReading: string, nextReading: string): boolean => {
 	// TODO: 前の読みの最後の文字と，次の読みの最初の文字が一致するか判定する
-	const previousLast = getLastReadingChar(previousReading);
-	const nextFirst = getFirstReadingChar(nextReading);
-
-	return previousLast !== '' && previousLast === nextFirst;
+	void previousReading;
+	void nextReading;
+	return false;
 };
 
 export const validateNextReading = (
@@ -70,28 +72,9 @@ export const validateNextReading = (
 	nextReading: string,
 ): ReadingValidationResult => {
 	// TODO: 空文字，「ん」終わり，しりとり不一致を判定する
-	if (normalizeReading(nextReading) === '') {
-		return {
-			ok: false,
-			reason: '読み仮名を入力してください',
-		};
-	}
-
-	if (endsWithN(nextReading)) {
-		return {
-			ok: false,
-			reason: '「ん」で終わる曲は使えません',
-		};
-	}
-
-	if (!canConnectReadings(previousReading, nextReading)) {
-		return {
-			ok: false,
-			reason: '前の曲の最後の文字と，次の曲の最初の文字が一致していません',
-		};
-	}
-
+	void previousReading;
+	void nextReading;
 	return {
-		ok: true,
+		ok: false,
 	};
 };
