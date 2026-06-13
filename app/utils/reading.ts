@@ -48,9 +48,8 @@ export const getFirstReadingChar = (reading: string): string => {
 };
 
 export const getLastReadingChar = (reading: string): string => {
-	// TODO: 正規化した読みの最後の文字を返す
-	void reading;
-	return '';
+	// 正規化した読みの最後の文字を返す
+	return normalizeReading(reading).at(-1) ?? '';
 };
 
 export const endsWithN = (reading: string): boolean => {
