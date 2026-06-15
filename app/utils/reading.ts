@@ -66,10 +66,18 @@ export const validateNextReading = (
 	previousReading: string,
 	nextReading: string,
 ): ReadingValidationResult => {
-	// TODO: 空文字，「ん」終わり，しりとり不一致を判定する
-	void previousReading;
-	void nextReading;
-	return {
-		ok: false,
-	};
+	// 空文字，「ん」終わり，しりとり不一致を判定する
+	if (
+		normalizeReading(nextReading) === '' ||
+		endsWithN(nextReading) ||
+		!canConnectReadings(previousReading, nextReading)
+	) {
+		return {
+			ok: false,
+		};
+	} else {
+		return {
+			ok: true,
+		};
+	}
 };
