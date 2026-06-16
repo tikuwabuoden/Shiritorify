@@ -39,7 +39,7 @@ export const normalizeReading = (reading: string): string => {
     getVowel(offset > 0 ? reading[offset - 1] : ""),
   );
   // 記号，空白，英数字を除外する
-  reading = reading.replace(/[^ぁ-ん]/g, "");
+  reading = reading.replace(/[^ぁ-ゖゔ]]/g, "");
 
   return reading;
 };
