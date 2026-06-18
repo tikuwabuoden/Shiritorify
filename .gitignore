@@ -3,16 +3,6 @@
 .env.local
 !.env.example
 
-# Dependencies
-node_modules/
-
-# Nuxt
-.nuxt/
-.output/
-
-# Build
-dist/
-
 # Logs
 *.log
 
