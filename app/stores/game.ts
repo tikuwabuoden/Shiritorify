@@ -10,7 +10,12 @@ export type Track = {
   reading: string;
 };
 
-export type GameStatus = "ready" | "playing" | "success" | "failed" | "finished";
+export type GameStatus =
+  | "ready"
+  | "playing"
+  | "success"
+  | "failed"
+  | "finished";
 
 export type GameState = {
   status: GameStatus;
@@ -37,13 +42,11 @@ export const useGameStore = defineStore("game", {
     isPlaying: (state): boolean => state.status === "playing",
 
     lastUsedTrack: (state): Track | null => {
-      // TODO: usedTracks の最後の曲を返す
-      return null;
+      // usedTracks の最後の曲を返す
+      return state.usedTracks.at(-1) ?? null;
     },
-
     usedSpotifyIds: (state): string[] => {
-      // TODO: 使用済み曲の spotifyId 一覧を返す
-      return [];
+      return state.usedTracks.map((track) => track.spotifyId);
     },
   },
 
