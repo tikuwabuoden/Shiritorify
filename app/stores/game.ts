@@ -52,8 +52,13 @@ export const useGameStore = defineStore("game", {
 
   actions: {
     startGame(firstTrack: Track) {
-      // TODO: ゲーム開始時の状態に更新する
-      throw new Error("Not implemented");
+      // ゲーム開始時の状態に更新する
+      this.status = "playing";
+      this.currentTrack = firstTrack;
+      this.usedTracks = [firstTrack];
+      this.score = 0;
+      this.remainingSeconds = initialRemainingSeconds;
+      this.failureReason = null;
     },
 
     submitTrack(nextTrack: Track) {
