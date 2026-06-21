@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import * as reading from "@/utils/reading";
 
 export type Track = {
   spotifyId: string;
@@ -62,8 +63,23 @@ export const useGameStore = defineStore("game", {
     },
 
     submitTrack(nextTrack: Track) {
-      // TODO: 再使用、読み、しりとり接続を判定してゲーム状態を更新する
-      throw new Error("Not implemented");
+      // 再使用、読み、しりとり接続を判定してゲーム状態を更新する
+      const lastTrack = this.lastUsedTrack;
+      if (this.usedSpotifyIds.includes(nextTrack.spotifyId)) {
+        this.status = "failed";
+        this.failureReason = "すでに使われた曲です";
+      } else if (reading.endsWithN(nextTrack.reading)) {
+        this.status = "failed";
+        this.failureReason = "「ん」で終わる曲は使えません";
+      } else if (lastTrack === null) {
+        this.status = "failed";
+        this.failureReason = "前の曲がありません";
+      } else if (
+        !reading.canConnectReadings(lastTrack.reading, nextTrack.reading)
+      ) {
+        this.status = "failed";
+        this.failureReason = "前の曲としりとりがつながっていません";
+      }
     },
 
     tick() {
