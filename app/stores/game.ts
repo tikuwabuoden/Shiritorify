@@ -83,8 +83,18 @@ export const useGameStore = defineStore("game", {
     },
 
     tick() {
-      // TODO: 残り時間を減らし、0秒になったら失敗状態にする
-      throw new Error("Not implemented");
+      // 残り時間を減らし、0秒になったら失敗状態にする
+      if (this.status !== "playing") {
+        return;
+      }
+      if (this.remainingSeconds > 0) {
+        this.remainingSeconds -= 1;
+      }
+      if (this.remainingSeconds <= 0) {
+        this.remainingSeconds = 0;
+        this.status = "failed";
+        this.failureReason = "時間切れです";
+      }
     },
 
     finishGame() {
