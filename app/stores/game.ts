@@ -98,13 +98,22 @@ export const useGameStore = defineStore("game", {
     },
 
     finishGame() {
-      // TODO: 結果画面に進むための状態に更新する
-      throw new Error("Not implemented");
+      // 結果画面に進むための状態に更新する
+      if (this.status !== "playing") {
+        return;
+      }
+
+      this.status = "finished";
     },
 
     resetGame() {
-      // TODO: 初期状態に戻す
-      throw new Error("Not implemented");
+      // 初期状態に戻す
+      this.status = "ready";
+      this.currentTrack = null;
+      this.usedTracks = [];
+      this.score = 0;
+      this.remainingSeconds = initialRemainingSeconds;
+      this.failureReason = null;
     },
   },
 });
