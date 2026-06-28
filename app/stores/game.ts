@@ -79,6 +79,12 @@ export const useGameStore = defineStore("game", {
       ) {
         this.status = "failed";
         this.failureReason = "前の曲としりとりがつながっていません";
+      } else {
+        this.currentTrack = nextTrack;
+        this.usedTracks.push(nextTrack);
+        this.score += 1;
+        this.remainingSeconds = initialRemainingSeconds;
+        this.failureReason = null;
       }
     },
 
