@@ -33,13 +33,16 @@ export const normalizeReading = (reading: string): string => {
     String.fromCharCode(char.charCodeAt(0) - 0x60),
   );
   // 小文字かなを通常のかなに正規化する
-  reading = reading.replace(/[ぁぃぅぇぉっゃゅょゎゕゖ]/g, (char) => map[char]);
+  reading = reading.replace(
+    /[ぁぃぅぇぉっゃゅょゎゕゖ]/g,
+    (char) => map[char] ?? "",
+  );
   // 長音「ー」を前の文字の母音に変換する
-  reading = reading.replace(/ー/g, (_, offset) =>
-    getVowel(offset > 0 ? reading[offset - 1] : ""),
+  reading = reading.replace(/ー/g, (_, offset, source) =>
+    getVowel(offset > 0 ? (source[offset - 1] ?? "") : ""),
   );
   // 記号，空白，英数字を除外する
-  reading = reading.replace(/[^ぁ-ゖゔ]]/g, "");
+  reading = reading.replace(/[^ぁ-ゖゔ]/g, "");
 
   return reading;
 };
