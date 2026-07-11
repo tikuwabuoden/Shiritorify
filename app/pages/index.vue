@@ -1,3 +1,27 @@
+<script setup lang="ts">
+type Track = {
+  id: number;
+  name: string;
+  artist: string;
+};
+
+const query = ref("");
+const serchResults = ref<Track[]>([]);
+
+const tracks = [
+  { id: 1, name: "夜に駆ける", artist: "YOSASOBI" },
+  { id: 2, name: "ルージュの伝言", artist: "荒井由実" },
+];
+
+const searchTracks = () => {
+  const keyword = query.value.trim();
+  serchResults.value = tracks.filter(
+    (track) => track.name.includes(keyword) || track.artist.includes(keyword),
+  );
+  console.log(serchResults.value);
+};
+</script>
+
 <template>
   <header>
     <h1 class="header">Shiritorify</h1>
@@ -8,8 +32,8 @@
         <p class="now-song-label">Now Songs...</p>
         <p class="now-song-title">夜に駆ける</p>
       </div>
-      <form class="form">
-        <input class="search-input" type="search" />
+      <form class="form" @submit.prevent="searchTracks">
+        <input v-model="query" class="search-input" type="search" />
         <button class="search-button" type="submit">検索</button>
       </form>
     </div>
