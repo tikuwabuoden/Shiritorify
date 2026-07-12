@@ -15,9 +15,13 @@ const tracks = [
 
 const searchTracks = () => {
   const keyword = query.value.trim();
-  serchResults.value = tracks.filter(
-    (track) => track.name.includes(keyword) || track.artist.includes(keyword),
-  );
+  if (keyword == "") {
+    serchResults.value = [];
+  } else {
+    serchResults.value = tracks.filter(
+      (track) => track.name.includes(keyword) || track.artist.includes(keyword),
+    );
+  }
   console.log(serchResults.value);
 };
 </script>
@@ -32,9 +36,13 @@ const searchTracks = () => {
         <p class="now-song-label">Now Songs...</p>
         <p class="now-song-title">夜に駆ける</p>
       </div>
-      <form class="form" @submit.prevent="searchTracks">
-        <input v-model="query" class="search-input" type="search" />
-        <button class="search-button" type="submit">検索</button>
+      <form class="form">
+        <input
+          v-model="query"
+          class="search-input"
+          type="search"
+          @input="searchTracks"
+        />
       </form>
     </div>
   </main>
@@ -82,8 +90,5 @@ const searchTracks = () => {
   outline: none;
   border: 2px solid #16a34a;
   border-radius: 6px;
-}
-
-.search-button {
 }
 </style>
